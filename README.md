@@ -61,7 +61,9 @@ La base se carga al crear el chatbot. NLTK tokeniza el texto sin descargar model
 
 ## Notebook y evidencia
 
-El [notebook](notebooks/Factory_Guardian_Avance_1.ipynb) contiene el recorrido del prototipo y las diez conversaciones. Es portable para Google Colab; la ejecución conservada y verificada en esta entrega es local.
+El [notebook](notebooks/Factory_Guardian_Avance_1.ipynb) contiene el recorrido del prototipo y las diez conversaciones. Como se ve en la captura, el chatbot también funcionó en Google Colab: las diez conversaciones terminaron sin fallos.
+
+![Ejecución del chatbot](artifacts/colab/ejecucion_colab.jpg)
 
 Para repetir las conversaciones y las pruebas:
 
