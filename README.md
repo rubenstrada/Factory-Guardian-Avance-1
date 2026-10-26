@@ -2,7 +2,7 @@
 
 Chatbot de consultas en Python 3.10+ que utiliza NLTK para tokenizar mensajes y reglas para identificar la consulta. Trabaja con cuatro registros ficticios sobre interacción entre peatones y montacargas y con una guía demostrativa.
 
-Planteé Factory Guardian a partir de una idea de hackathon. Para este avance decidí concentrarme en un chatbot de consultas, de acuerdo con la consigna, y organizar el código para poder explicar cómo pasa de un mensaje a una respuesta.
+La idea de Factory Guardian surgió de una propuesta de hackathon. Para este avance decidí concentrarme en la necesidad de un supervisor de recuperar antecedentes: consultar registros por zona, revisar su estado y encontrar una guía. Acoté el desarrollo a ese recorrido, de acuerdo con la consigna, antes de ampliar la plataforma.
 
 ## Consultas disponibles
 
@@ -78,4 +78,4 @@ Los registros y la guía son ficticios y sirven para demostrar el funcionamiento
 
 El avance utiliza reglas y no aprende de las conversaciones. La visión por computadora, los modelos de lenguaje, RAG y las alertas quedan como posibilidades de evolución; no forman parte de esta implementación.
 
-Desarrollé esta entrega con asistencia de Codex en el código, las pruebas y la documentación. En la [nota de uso de IA](docs/uso_de_ia.md) explico cómo relacioné ese apoyo con las decisiones del proyecto.
+La idea y el alcance partieron de mí. Desarrollé esta entrega con asistencia de Codex en la implementación, las pruebas y la documentación. En la [nota de uso de IA](docs/uso_de_ia.md) explico cómo planteé el problema, qué organización buscaba a partir de mi experiencia anterior y cómo utilicé ese apoyo.

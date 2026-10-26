@@ -18,7 +18,7 @@ El conocimiento contiene cuatro registros ficticios de interacción entre peaton
 
 ## Organización del proyecto
 
-Quise separar el chatbot de la forma de utilizarlo: la misma clase puede llamarse desde Python, la terminal o el notebook. El conocimiento se conserva en JSON y las comprobaciones tienen sus propios archivos. Esta organización permite localizar qué parte interpreta el mensaje, de dónde obtiene la información y cómo se revisa la respuesta.
+Quise separar el chatbot de la forma de utilizarlo: la misma clase puede llamarse desde Python, la terminal o el notebook. Esa preferencia viene de una experiencia anterior con un backend de ERP, en el que concentrar demasiada lógica en `app.py` dificultaba localizar responsabilidades. Aquí el conocimiento se conserva en JSON y las comprobaciones tienen sus propios archivos. Esta organización permite localizar qué parte interpreta el mensaje, de dónde obtiene la información y cómo se revisa la respuesta, sin añadir componentes que este avance todavía no necesita.
 
 ## Comprobaciones
 

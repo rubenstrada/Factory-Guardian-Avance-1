@@ -2,7 +2,7 @@
 
 ## Introducción
 
-Planteé Factory Guardian a partir de una idea de hackathon relacionada con la interacción entre peatones y montacargas. Para este avance delimité la propuesta a un chatbot de consultas por reglas. Busco comprender el recorrido entre una pregunta, su intención y los datos recuperados.
+La idea de Factory Guardian surgió de una propuesta de hackathon relacionada con la interacción entre peatones y montacargas. Mi punto de partida fue definir qué necesidad del supervisor podía atender en este avance antes de ampliar la plataforma. Por eso delimité la propuesta a un chatbot de consultas por reglas y al recorrido entre una pregunta, su intención y los datos recuperados.
 
 La implementación utiliza Python y NLTK, una base JSON ficticia y respuestas determinadas por reglas. Los ejemplos permiten comprobar el recorrido de una consulta; no representan hallazgos de una planta. Factory Guardian conserva como visión futura la relación entre observaciones visuales, antecedentes y explicaciones para el supervisor. Aquí desarrollo únicamente su componente de consultas.
 
@@ -16,7 +16,7 @@ No dispongo de información de una planta ni de mediciones sobre sus tiempos de 
 
 ### Problema
 
-Recuperar registros y orientaciones sin revisar manualmente toda la base. Esta versión interpreta preguntas breves, las vincula con datos disponibles y solicita información cuando falta una zona o un identificador.
+Recuperar registros y orientaciones sin revisar manualmente toda la base. De esa necesidad se desprenden las consultas por zona, por identificador y por guía. Esta versión interpreta preguntas breves, las vincula con datos disponibles y solicita información cuando falta una zona o un identificador.
 
 ### Objetivo general
 
@@ -42,7 +42,7 @@ La persona escribe una consulta completa mediante la terminal, el notebook o una
 
 ### Chatbot
 
-La clase `FactoryGuardianBot` recibe texto mediante `respond` y devuelve un objeto `Reply` con `intent` y `text`. Las funciones de normalización, tokenización y carga del conocimiento están separadas de la clase para facilitar su revisión.
+La clase `FactoryGuardianBot` recibe texto mediante `respond` y devuelve un objeto `Reply` con `intent` y `text`. Las funciones de normalización, tokenización y carga del conocimiento están separadas de la clase. Así, el mismo comportamiento puede utilizarse desde la terminal o el notebook sin mezclar la consulta con la interfaz.
 
 ### Base de conocimiento
 
@@ -114,11 +114,17 @@ Para una siguiente etapa considero ampliar ejemplos con usuarios y revisar solic
 
 ## Conclusiones
 
-Este avance convierte una parte de Factory Guardian en un prototipo acotado que permite relacionar consultas, reglas y datos. Mi decisión fue concentrarme en un recorrido que pudiera explicar antes de ampliar la idea del hackathon. El aprendizaje central es que definir qué puede responder un asistente también exige decidir qué debe pedir, qué información desconoce y qué acciones quedan fuera de su alcance.
+Este avance convierte una parte de mi propuesta Factory Guardian en un prototipo acotado que relaciona consultas, reglas y datos. Decidí empezar por recuperar información antes de ampliar la idea del hackathon a cámaras y alertas. La solución permite seguir de dónde sale cada respuesta y distinguir una consulta incompleta de otra válida sin resultados. El aprendizaje central es que definir un asistente también exige decidir qué información necesita y qué conclusiones no puede sostener.
 
 ## Uso de herramientas
 
-Utilicé Codex para apoyar la escritura y revisión del código, ejecutar las pruebas, preparar el notebook y redactar la documentación. Mi participación consistió en proponer Factory Guardian, delimitar el avance y revisar su relación con la consigna. Asumo la responsabilidad de comprender las reglas, explicar sus resultados y reconocer los límites de esta demostración.
+La idea de Factory Guardian y el alcance que buscaba desarrollar partieron de mí. Primero planteé el problema y después lo acoté a consultas sobre eventos, estados y una guía. Estas funciones responden a necesidades concretas del supervisor sin convertir al chatbot en una herramienta que decide si una situación es segura.
+
+De mis trabajos anteriores mantuve la preferencia por separar responsabilidades. Mi experiencia con un backend de ERP, donde había concentrado demasiada lógica en `app.py`, influyó en la organización que buscaba para este avance. Separar el chatbot, el JSON, las formas de ejecución y las pruebas permite localizar qué interpreta la pregunta y de dónde obtiene la respuesta.
+
+Utilicé Codex para discutir alternativas, concretar mis especificaciones en código, revisar la implementación, preparar el notebook, ejecutar las pruebas y apoyar la redacción. Fui indicando el alcance y los ajustes de organización y presentación. La implementación y las comprobaciones automatizadas se realizaron con esa asistencia; la evidencia identifica su ejecución local.
+
+Mi responsabilidad es comprender y explicar las decisiones de la solución: por qué una consulta tiene prioridad sobre un saludo, por qué se pide una zona o un ID completos y por qué el conteo se obtiene de los registros. Las pruebas verifican esos casos, sin demostrar comprensión general del lenguaje ni validación en una planta. La explicación ampliada de este proceso está en la nota de uso de IA del repositorio.
 
 ## Referencias
 
