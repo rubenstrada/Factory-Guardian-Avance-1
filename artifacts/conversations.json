@@ -1,0 +1,322 @@
+{
+  "generated_at_utc": "2026-10-26T04:24:33.044201+00:00",
+  "execution_environment": "local",
+  "data_scope": "Escenarios y registros ficticios; no son resultados industriales.",
+  "context_policy": "Sin estado entre mensajes; cada consulta debe ser completa.",
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Windows",
+    "nltk": "3.10.4"
+  },
+  "summary": {
+    "sessions": 10,
+    "turns": 20,
+    "passed_turns": 20,
+    "failed_turns": 0
+  },
+  "sessions": [
+    {
+      "id": "C01",
+      "purpose": "Presentación y orientación",
+      "turns": [
+        {
+          "input": "Hola",
+          "expected_intent": "saludo",
+          "expected_contains": [
+            "Factory Guardian",
+            "base de ejemplo"
+          ],
+          "actual_intent": "saludo",
+          "actual_text": "Hola, soy Factory Guardian. Consulto una base de ejemplo por reglas. Escribe 'ayuda' para conocer las consultas disponibles.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "Necesito ayuda",
+          "expected_intent": "ayuda",
+          "expected_contains": [
+            "eventos",
+            "estado",
+            "guía"
+          ],
+          "actual_intent": "ayuda",
+          "actual_text": "Puedo consultar eventos por zona, el estado de un ID y una guía demostrativa. Ejemplos: 'Eventos en Cruce C', 'Estado NM-001', 'Guía de Cruce C'. Envía cada consulta completa.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "purpose": "Contrastar una zona con registros y una zona vacía",
+      "turns": [
+        {
+          "input": "¿Cuántos near-miss hay en el Cruce C?",
+          "expected_intent": "consultar_eventos",
+          "expected_contains": [
+            "4 registros",
+            "Cruce C"
+          ],
+          "actual_intent": "consultar_eventos",
+          "actual_text": "Cruce C tiene 4 registros disponibles.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "¿Cuántos eventos hay en Andén A?",
+          "expected_intent": "consultar_eventos",
+          "expected_contains": [
+            "0 registros",
+            "Andén A"
+          ],
+          "actual_intent": "consultar_eventos",
+          "actual_text": "Andén A tiene 0 registros disponibles.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C03",
+      "purpose": "Prioridad de consulta útil y normalización",
+      "turns": [
+        {
+          "input": "Hola, ¿CUÁNTOS EVENTOS hay en CRUCE C?",
+          "expected_intent": "consultar_eventos",
+          "expected_contains": [
+            "4 registros",
+            "Cruce C"
+          ],
+          "actual_intent": "consultar_eventos",
+          "actual_text": "Cruce C tiene 4 registros disponibles.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "Muéstrame eventos en PASILLO B.",
+          "expected_intent": "consultar_eventos",
+          "expected_contains": [
+            "0 registros",
+            "Pasillo B"
+          ],
+          "actual_intent": "consultar_eventos",
+          "actual_text": "Pasillo B tiene 0 registros disponibles.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C04",
+      "purpose": "Estados de dos identificadores existentes",
+      "turns": [
+        {
+          "input": "¿Cuál es el estado de NM-001?",
+          "expected_intent": "consultar_estado",
+          "expected_contains": [
+            "NM-001",
+            "Abierto"
+          ],
+          "actual_intent": "consultar_estado",
+          "actual_text": "NM-001: Abierto. Zona: Cruce C.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "Consulta estado de NM-003",
+          "expected_intent": "consultar_estado",
+          "expected_contains": [
+            "NM-003",
+            "Cerrado"
+          ],
+          "actual_intent": "consultar_estado",
+          "actual_text": "NM-003: Cerrado. Zona: Cruce C.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C05",
+      "purpose": "Identificador inexistente y reformulación completa",
+      "turns": [
+        {
+          "input": "Estado de NM-999",
+          "expected_intent": "consultar_estado",
+          "expected_contains": [
+            "NM-999",
+            "no existe"
+          ],
+          "actual_intent": "consultar_estado",
+          "actual_text": "El ID NM-999 no existe en la base de conocimiento.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "Estado NM-002",
+          "expected_intent": "consultar_estado",
+          "expected_contains": [
+            "NM-002",
+            "En revisión"
+          ],
+          "actual_intent": "consultar_estado",
+          "actual_text": "NM-002: En revisión. Zona: Cruce C.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C06",
+      "purpose": "Consulta de eventos sin zona",
+      "turns": [
+        {
+          "input": "¿Cuántos eventos hay?",
+          "expected_intent": "consultar_eventos",
+          "expected_contains": [
+            "consulta completa",
+            "zona",
+            "Cruce C"
+          ],
+          "actual_intent": "consultar_eventos",
+          "actual_text": "Escribe la consulta completa con una zona válida: Cruce C, Andén A, Pasillo B. La zona está ausente o no se reconoce. No conservo contexto entre mensajes.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "¿Cuántos eventos hay en Cruce C?",
+          "expected_intent": "consultar_eventos",
+          "expected_contains": [
+            "4 registros",
+            "Cruce C"
+          ],
+          "actual_intent": "consultar_eventos",
+          "actual_text": "Cruce C tiene 4 registros disponibles.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C07",
+      "purpose": "Consulta de estado sin identificador",
+      "turns": [
+        {
+          "input": "Necesito saber el estado",
+          "expected_intent": "consultar_estado",
+          "expected_contains": [
+            "ID completo",
+            "NM-001"
+          ],
+          "actual_intent": "consultar_estado",
+          "actual_text": "Indica el ID completo en la consulta, por ejemplo: ¿Cuál es el estado de NM-001? No conservo contexto entre mensajes.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "¿Cuál es el estado de NM-004?",
+          "expected_intent": "consultar_estado",
+          "expected_contains": [
+            "NM-004",
+            "Abierto"
+          ],
+          "actual_intent": "consultar_estado",
+          "actual_text": "NM-004: Abierto. Zona: Cruce C.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C08",
+      "purpose": "Guía disponible y zona sin guía",
+      "turns": [
+        {
+          "input": "Consulta el procedimiento del Cruce C",
+          "expected_intent": "consultar_procedimiento",
+          "expected_contains": [
+            "G-01",
+            "demostrativa",
+            "no sustituye"
+          ],
+          "actual_intent": "consultar_procedimiento",
+          "actual_text": "Guía demostrativa G-01, ficticia: consultar la señalización y la segregación del cruce en el procedimiento aprobado de la planta y solicitar revisión al responsable de seguridad. Esta guía no sustituye un procedimiento real ni una evaluación profesional.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "¿Tienes una guía para Andén A?",
+          "expected_intent": "consultar_procedimiento",
+          "expected_contains": [
+            "No hay guía",
+            "Andén A"
+          ],
+          "actual_intent": "consultar_procedimiento",
+          "actual_text": "No hay guía demostrativa para Andén A. Consulta el procedimiento aprobado con el responsable de seguridad.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C09",
+      "purpose": "Límites de cámaras, alertas y registro",
+      "turns": [
+        {
+          "input": "¿Puedes conectar una cámara y enviar alertas?",
+          "expected_intent": "alcance",
+          "expected_contains": [
+            "solo consultas",
+            "No conecto cámaras",
+            "no envío alertas"
+          ],
+          "actual_intent": "alcance",
+          "actual_text": "Este avance ofrece solo consultas sobre una base de ejemplo. No conecto cámaras, no envío alertas, no registro eventos y no uso un LLM. No sustituyo la revisión humana.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "Quiero registrar un nuevo evento",
+          "expected_intent": "alcance",
+          "expected_contains": [
+            "no registro",
+            "base de ejemplo"
+          ],
+          "actual_intent": "alcance",
+          "actual_text": "Este avance ofrece solo consultas sobre una base de ejemplo. No conecto cámaras, no envío alertas, no registro eventos y no uso un LLM. No sustituyo la revisión humana.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    },
+    {
+      "id": "C10",
+      "purpose": "Solicitud fuera del dominio y cierre",
+      "turns": [
+        {
+          "input": "¿Qué clima hará mañana?",
+          "expected_intent": "no_reconocida",
+          "expected_contains": [
+            "No reconozco",
+            "ayuda"
+          ],
+          "actual_intent": "no_reconocida",
+          "actual_text": "No reconozco esa consulta. Escribe 'ayuda' y reformula la pregunta completa con la zona o el ID correspondiente.",
+          "missing_fragments": [],
+          "passed": true
+        },
+        {
+          "input": "Adiós",
+          "expected_intent": "despedida",
+          "expected_contains": [
+            "Hasta luego"
+          ],
+          "actual_intent": "despedida",
+          "actual_text": "Hasta luego. Las consultas de esta demostración no sustituyen la revisión humana.",
+          "missing_fragments": [],
+          "passed": true
+        }
+      ]
+    }
+  ]
+}

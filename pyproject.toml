@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "factory-guardian-avance1"
+version = "0.1.0"
+description = "Chatbot académico de consultas por reglas con NLTK"
+requires-python = ">=3.10"
+dependencies = ["nltk>=3.9,<4"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "nbformat>=5,<6", "nbclient>=0.10,<1", "ipykernel>=6,<8"]
+
+[project.scripts]
+factory-guardian = "factory_guardian.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+factory_guardian = ["knowledge.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

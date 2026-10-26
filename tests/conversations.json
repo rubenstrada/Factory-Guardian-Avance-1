@@ -1,0 +1,42 @@
+[
+  {"id":"C01","purpose":"Presentación y orientación","turns":[
+    {"input":"Hola","expected_intent":"saludo","expected_contains":["Factory Guardian","base de ejemplo"]},
+    {"input":"Necesito ayuda","expected_intent":"ayuda","expected_contains":["eventos","estado","guía"]}
+  ]},
+  {"id":"C02","purpose":"Contrastar una zona con registros y una zona vacía","turns":[
+    {"input":"¿Cuántos near-miss hay en el Cruce C?","expected_intent":"consultar_eventos","expected_contains":["4 registros","Cruce C"]},
+    {"input":"¿Cuántos eventos hay en Andén A?","expected_intent":"consultar_eventos","expected_contains":["0 registros","Andén A"]}
+  ]},
+  {"id":"C03","purpose":"Prioridad de consulta útil y normalización","turns":[
+    {"input":"Hola, ¿CUÁNTOS EVENTOS hay en CRUCE C?","expected_intent":"consultar_eventos","expected_contains":["4 registros","Cruce C"]},
+    {"input":"Muéstrame eventos en PASILLO B.","expected_intent":"consultar_eventos","expected_contains":["0 registros","Pasillo B"]}
+  ]},
+  {"id":"C04","purpose":"Estados de dos identificadores existentes","turns":[
+    {"input":"¿Cuál es el estado de NM-001?","expected_intent":"consultar_estado","expected_contains":["NM-001","Abierto"]},
+    {"input":"Consulta estado de NM-003","expected_intent":"consultar_estado","expected_contains":["NM-003","Cerrado"]}
+  ]},
+  {"id":"C05","purpose":"Identificador inexistente y reformulación completa","turns":[
+    {"input":"Estado de NM-999","expected_intent":"consultar_estado","expected_contains":["NM-999","no existe"]},
+    {"input":"Estado NM-002","expected_intent":"consultar_estado","expected_contains":["NM-002","En revisión"]}
+  ]},
+  {"id":"C06","purpose":"Consulta de eventos sin zona","turns":[
+    {"input":"¿Cuántos eventos hay?","expected_intent":"consultar_eventos","expected_contains":["consulta completa","zona","Cruce C"]},
+    {"input":"¿Cuántos eventos hay en Cruce C?","expected_intent":"consultar_eventos","expected_contains":["4 registros","Cruce C"]}
+  ]},
+  {"id":"C07","purpose":"Consulta de estado sin identificador","turns":[
+    {"input":"Necesito saber el estado","expected_intent":"consultar_estado","expected_contains":["ID completo","NM-001"]},
+    {"input":"¿Cuál es el estado de NM-004?","expected_intent":"consultar_estado","expected_contains":["NM-004","Abierto"]}
+  ]},
+  {"id":"C08","purpose":"Guía disponible y zona sin guía","turns":[
+    {"input":"Consulta el procedimiento del Cruce C","expected_intent":"consultar_procedimiento","expected_contains":["G-01","demostrativa","no sustituye"]},
+    {"input":"¿Tienes una guía para Andén A?","expected_intent":"consultar_procedimiento","expected_contains":["No hay guía","Andén A"]}
+  ]},
+  {"id":"C09","purpose":"Límites de cámaras, alertas y registro","turns":[
+    {"input":"¿Puedes conectar una cámara y enviar alertas?","expected_intent":"alcance","expected_contains":["solo consultas","No conecto cámaras","no envío alertas"]},
+    {"input":"Quiero registrar un nuevo evento","expected_intent":"alcance","expected_contains":["no registro","base de ejemplo"]}
+  ]},
+  {"id":"C10","purpose":"Solicitud fuera del dominio y cierre","turns":[
+    {"input":"¿Qué clima hará mañana?","expected_intent":"no_reconocida","expected_contains":["No reconozco","ayuda"]},
+    {"input":"Adiós","expected_intent":"despedida","expected_contains":["Hasta luego"]}
+  ]}
+]

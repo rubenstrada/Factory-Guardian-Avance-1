@@ -1,0 +1,42 @@
+{
+  "date_local": "2026-10-25",
+  "execution_performed_with": "Codex, mediante comandos automatizados locales",
+  "runtime": {"python": "3.12.14", "platform": "Windows", "nltk": "3.10.4"},
+  "tests": {
+    "command": "python -m pytest -q --tb=short --junitxml=artifacts/test_results.xml",
+    "passed": 26,
+    "failed": 0,
+    "errors": 0,
+    "evidence": "artifacts/test_results.xml"
+  },
+  "conversations": {
+    "command": "python scripts/run_conversations.py",
+    "sessions": 10,
+    "turns": 20,
+    "passed_turns": 20,
+    "failed_turns": 0,
+    "json": "artifacts/conversations.json",
+    "markdown": "artifacts/conversations.md"
+  },
+  "notebook": {
+    "command": "python scripts/build_notebook.py --execute",
+    "path": "notebooks/Factory_Guardian_Avance_1.ipynb",
+    "execution_environment": "local",
+    "executed_code_cells": 6,
+    "error_outputs": 0,
+    "same_embedded_bot_and_evaluator_as_repository": true,
+    "same_twenty_responses_as_repository_runner": true,
+    "tested_from_empty_execution_directory": true,
+    "colab_execution_verified": false
+  },
+  "tdd": {
+    "initial_red": {"failed": 26, "passed": 0, "evidence": "artifacts/tdd_red.xml"},
+    "response_copy_red": {"failed": 3, "passed": 22, "evidence": "artifacts/tdd_copy_red.xml"},
+    "log": "artifacts/tdd_log.md"
+  },
+  "limitations": [
+    "Pruebas de reglas sobre datos y situaciones ficticios; no demuestran desempeño industrial.",
+    "Sin estado entre mensajes; cada consulta necesita zona o identificador completos.",
+    "Google Colab no fue ejecutado por este proceso local."
+  ]
+}

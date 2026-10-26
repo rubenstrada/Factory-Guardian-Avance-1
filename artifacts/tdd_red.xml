@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="26" skipped="0" tests="26" time="0.259" timestamp="2026-10-25T22:18:59.211861-06:00" hostname="rubas"><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[Hola-saludo-fragments0]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[Ayuda-ayuda-fragments1]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[\xbfCu\xe1l es tu alcance?-alcance-fragments2]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[\xbfCu\xe1ntos near-miss hay en Cruce C?-consultar_eventos-fragments3]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[Estado NM-001-consultar_estado-fragments4]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[Procedimiento Cruce C-consultar_procedimiento-fragments5]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[Adi\xf3s-despedida-fragments6]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_recognizes_eight_supported_intents[\xbfQu\xe9 clima har\xe1 ma\xf1ana?-no_reconocida-fragments7]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:29: in test_recognizes_eight_supported_intents
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_greeting_does_not_hide_the_useful_query[Hola, \xbfCU\xc1NTOS EVENTOS hay en CRUCE C?]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:39: in test_greeting_does_not_hide_the_useful_query
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_greeting_does_not_hide_the_useful_query[\xa1BUENOS D\xcdAS! necesito consultar near-miss del cruce c.]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:39: in test_greeting_does_not_hide_the_useful_query
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_valid_empty_zone_returns_zero_not_unknown[Eventos en ANDEN A-And\xe9n A]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:49: in test_valid_empty_zone_returns_zero_not_unknown
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_valid_empty_zone_returns_zero_not_unknown[Near-miss en Pasillo B-Pasillo B]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:49: in test_valid_empty_zone_returns_zero_not_unknown
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_unknown_identifier_is_explicit_not_an_invented_status" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:55: in test_unknown_identifier_is_explicit_not_an_invented_status
+    reply = make_bot().respond("Estado NM-999")
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_missing_parameters_ask_for_a_complete_reformulation[\xbfCu\xe1ntos eventos hay?-consultar_eventos-consulta completa]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:67: in test_missing_parameters_ask_for_a_complete_reformulation
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_missing_parameters_ask_for_a_complete_reformulation[Eventos en Cruce X-consultar_eventos-zona]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:67: in test_missing_parameters_ask_for_a_complete_reformulation
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_missing_parameters_ask_for_a_complete_reformulation[Necesito el estado-consultar_estado-ID completo]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:67: in test_missing_parameters_ask_for_a_complete_reformulation
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_missing_parameters_ask_for_a_complete_reformulation[Quiero una gu\xeda-consultar_procedimiento-consulta completa]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:67: in test_missing_parameters_ask_for_a_complete_reformulation
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_partial_followup_does_not_pretend_to_remember_context" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:73: in test_partial_followup_does_not_pretend_to_remember_context
+    bot = make_bot()
+          ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_count_is_derived_from_supplied_knowledge_not_a_constant" time="0.007"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:88: in test_count_is_derived_from_supplied_knowledge_not_a_constant
+    bot = make_bot(path)
+          ^^^^^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_empty_or_punctuation_only_input_asks_for_help[]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:96: in test_empty_or_punctuation_only_input_asks_for_help
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_empty_or_punctuation_only_input_asks_for_help[   ]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:96: in test_empty_or_punctuation_only_input_asks_for_help
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_empty_or_punctuation_only_input_asks_for_help[...?!]" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:96: in test_empty_or_punctuation_only_input_asks_for_help
+    reply = make_bot().respond(text)
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_procedure_not_available_is_not_fabricated" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:102: in test_procedure_not_available_is_not_fabricated
+    reply = make_bot().respond("Guía para Andén A")
+            ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_conversation_suite_has_ten_independent_sessions_and_real_passes" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:108: in test_conversation_suite_has_ten_independent_sessions_and_real_passes
+    bot = make_bot()
+          ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_bot" name="test_conversation_evaluator_exposes_incorrect_expectation" time="0.001"><failure message="Failed: Capacidad ausente: todavía no existe FactoryGuardianBot">tests\test_bot.py:120: in test_conversation_evaluator_exposes_incorrect_expectation
+    bot = make_bot()
+          ^^^^^^^^^^
+tests\test_bot.py:13: in make_bot
+    pytest.fail("Capacidad ausente: todavía no existe FactoryGuardianBot")
+E   Failed: Capacidad ausente: todavía no existe FactoryGuardianBot</failure></testcase><testcase classname="tests.test_notebook" name="test_self_contained_notebook_runs_from_an_empty_directory" time="0.053"><failure message="AssertionError: C:\Users\rayor\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe: can't open file 'C:\\Users\\rayor\\Documents\\Codex\\2026-09-13\\1-lee-cuidadosamente-el-caso-pr\\work\\factory_guardian_avance1\\scripts\\build_notebook.py': [Errno 2] No such file or directory&#10;  &#10;assert 2 == 0&#10; +  where 2 = CompletedProcess(args=['C:\\Users\\rayor\\Documents\\Codex\\2026-09-13\\1-lee-cuidadosamente-el-caso-pr\\work\\factory...l-caso-pr\\\\work\\\\factory_guardian_avance1\\\\scripts\\\\build_notebook.py': [Errno 2] No such file or directory\n&quot;).returncode">tests\test_notebook.py:13: in test_self_contained_notebook_runs_from_an_empty_directory
+    assert result.returncode == 0, result.stdout + result.stderr
+E   AssertionError: C:\Users\rayor\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe: can't open file 'C:\\Users\\rayor\\Documents\\Codex\\2026-09-13\\1-lee-cuidadosamente-el-caso-pr\\work\\factory_guardian_avance1\\scripts\\build_notebook.py': [Errno 2] No such file or directory
+E     
+E   assert 2 == 0
+E    +  where 2 = CompletedProcess(args=['C:\\Users\\rayor\\Documents\\Codex\\2026-09-13\\1-lee-cuidadosamente-el-caso-pr\\work\\factory...l-caso-pr\\\\work\\\\factory_guardian_avance1\\\\scripts\\\\build_notebook.py': [Errno 2] No such file or directory\n").returncode</failure></testcase></testsuite></testsuites>

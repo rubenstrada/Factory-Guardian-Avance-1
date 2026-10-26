@@ -1,0 +1,13 @@
+{
+  "notice": "Base ficticia para una demostración académica; no contiene registros de una planta real.",
+  "zones": ["Cruce C", "Andén A", "Pasillo B"],
+  "events": [
+    {"id": "NM-001", "zone": "Cruce C", "status": "Abierto", "description": "Escenario ficticio de proximidad entre peatón y montacargas."},
+    {"id": "NM-002", "zone": "Cruce C", "status": "En revisión", "description": "Escenario ficticio de visibilidad limitada en el cruce."},
+    {"id": "NM-003", "zone": "Cruce C", "status": "Cerrado", "description": "Escenario ficticio de invasión de la ruta peatonal."},
+    {"id": "NM-004", "zone": "Cruce C", "status": "Abierto", "description": "Escenario ficticio de interacción en una zona de paso compartida."}
+  ],
+  "guides": [
+    {"id": "G-01", "zone": "Cruce C", "text": "Guía demostrativa G-01, ficticia: consultar la señalización y la segregación del cruce en el procedimiento aprobado de la planta y solicitar revisión al responsable de seguridad. Esta guía no sustituye un procedimiento real ni una evaluación profesional."}
+  ]
+}
