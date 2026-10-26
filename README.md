@@ -4,31 +4,31 @@ Chatbot de consultas en Python 3.10+ que utiliza NLTK para tokenizar mensajes y 
 
 La idea de Factory Guardian surgió de una propuesta de hackathon. Para este avance decidí concentrarme en la necesidad de un supervisor de recuperar antecedentes: consultar registros por zona, revisar su estado y encontrar una guía. Acoté el desarrollo a ese recorrido, de acuerdo con la consigna, antes de ampliar la plataforma.
 
-## Consultas disponibles
+Repositorio: [Factory-Guardian-Avance-1](https://github.com/rubenstrada/Factory-Guardian-Avance-1).
 
-| Intención | Función |
+## Recorrer el proyecto
+
+El reporte explica el problema, la metodología y las decisiones. La guía técnica reúne el funcionamiento del código y la forma de repetir las comprobaciones.
+
+| Recurso | Contenido |
 |---|---|
-| `saludo` | Inicia la interacción. |
-| `ayuda` | Explica las consultas disponibles. |
-| `alcance` | Describe qué hace el prototipo. |
-| `consultar_eventos` | Consulta los registros de una zona. |
-| `consultar_estado` | Busca el estado de un registro por su ID. |
-| `consultar_procedimiento` | Presenta la guía demostrativa. |
-| `despedida` | Cierra la interacción. |
-| `no_reconocida` | Orienta cuando el mensaje no corresponde a una consulta admitida. |
+| [Reporte metodológico](docs/reporte.md) | Problema, alcance, metodología, interpretación y conclusiones. |
+| [Guía técnica](docs/guia_tecnica.md) | Responsabilidades, funciones, reglas, datos y ejecución. |
+| [Decisiones](docs/decisiones.md) | Cómo acoté y organicé el avance. |
+| [Uso de IA](docs/uso_de_ia.md) | Mi participación y el apoyo recibido de Codex. |
+| [Código fuente](src/factory_guardian/) | Chatbot, interfaz de terminal, evaluador y conocimiento. |
+| [Evidencia completa](artifacts/) | Transcripciones, resultados de pruebas y comprobación del notebook. |
 
-Las consultas son de solo lectura. Si falta información, el chatbot solicita una pregunta completa; cada mensaje se interpreta por separado.
+## Ejecutar desde la raíz
 
-## Ejecutar
-
-Desde la raíz del repositorio:
+Con Python 3.10 o posterior:
 
 ```powershell
 python -m pip install -e ".[dev]"
 python -m factory_guardian.cli
 ```
 
-NLTK se utiliza para tokenizar el texto sin descargar modelos ni conectarse a servicios externos.
+Prueba `Eventos en Cruce C`, `Estado NM-001` o `Guía de Cruce C`. Las consultas son de solo lectura y cada mensaje se interpreta por separado. Si falta una zona o un ID, el chatbot solicita una pregunta completa. Para terminar la terminal, escribe `salir`.
 
 ## Usar desde Python
 
@@ -43,34 +43,34 @@ print(reply.text)
 
 `respond` devuelve un objeto `Reply` con la intención identificada y el texto de respuesta.
 
-## Notebook y comprobaciones
+## Arquitectura y flujo
 
-El notebook [Factory_Guardian_Avance_1.ipynb](notebooks/Factory_Guardian_Avance_1.ipynb) permite recorrer el prototipo y sus ejemplos. Se entrega para abrirlo en Google Colab; la comprobación del notebook se realiza localmente y se distingue de una ejecución en esa plataforma.
+```mermaid
+flowchart LR
+    U[Usuario] --> N[Normalización y tokenización NLTK]
+    N --> R[Reglas de intención]
+    R -->|Consulta completa de datos| K[Base JSON cargada]
+    K --> T["Reply: intención y texto"]
+    R -->|Consulta incompleta o no reconocida| O[Orientación para reformular]
+    O --> T
+    R -->|Saludo, ayuda, alcance o despedida| T
+    T --> U
+```
 
-Para ejecutar las diez conversaciones y las pruebas:
+La base se carga al crear el chatbot. NLTK tokeniza el texto sin descargar modelos; las reglas seleccionan una respuesta o consultan los registros del JSON. El detalle de las ocho intenciones está en la [guía técnica](docs/guia_tecnica.md#orden-de-las-reglas).
+
+## Notebook y evidencia
+
+El [notebook](notebooks/Factory_Guardian_Avance_1.ipynb) contiene el recorrido del prototipo y las diez conversaciones. Es portable para Google Colab; la ejecución conservada y verificada en esta entrega es local.
+
+Para repetir las conversaciones y las pruebas:
 
 ```powershell
 python scripts/run_conversations.py
 python -m pytest --junitxml=artifacts/test_results.xml
 ```
 
-Las conversaciones comparan las respuestas con expectativas de intención y contenido. Cada sesión incluye al menos dos mensajes de usuario y registra el entorno utilizado. Las salidas se conservan en [conversations.md](artifacts/conversations.md) y [conversations.json](artifacts/conversations.json).
-
-Para reconstruir y ejecutar el notebook localmente:
-
-```powershell
-python scripts/build_notebook.py --execute
-```
-
-## Organización
-
-- `src/factory_guardian/`: chatbot, normalización del texto y carga del conocimiento.
-- `src/factory_guardian/knowledge.json`: registros ficticios y guía demostrativa.
-- `scripts/`: ejecución de conversaciones y preparación del notebook.
-- `notebooks/`: recorrido del prototipo.
-- `tests/`: comprobaciones del comportamiento.
-- `docs/`: [reporte del avance](docs/reporte.md), [decisiones](docs/decisiones.md) y [uso de IA](docs/uso_de_ia.md).
-- `artifacts/`: resultados de las comprobaciones.
+Las [diez transcripciones](artifacts/conversations.md) muestran preguntas, respuestas y resultados. Las [expectativas](tests/conversations.json) y las [salidas estructuradas](artifacts/conversations.json) permiten seguir cada comparación. El [resumen de verificación](artifacts/verification_summary.json) identifica los resultados y el entorno utilizado. La guía técnica incluye los comandos para [reconstruir el notebook](docs/guia_tecnica.md#ejecución-desde-la-raíz).
 
 ## Límites
 

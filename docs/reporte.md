@@ -2,129 +2,149 @@
 
 ## Introducción
 
-La idea de Factory Guardian surgió de una propuesta de hackathon relacionada con la interacción entre peatones y montacargas. Mi punto de partida fue definir qué necesidad del supervisor podía atender en este avance antes de ampliar la plataforma. Por eso delimité la propuesta a un chatbot de consultas por reglas y al recorrido entre una pregunta, su intención y los datos recuperados.
+Este reporte presenta el primer avance de Factory Guardian, un asistente orientado a la consulta de información sobre la interacción entre peatones y montacargas. La propuesta surgió de una idea de hackathon. Para esta actividad decidí comenzar por una necesidad concreta del supervisor: recuperar antecedentes y orientaciones mediante preguntas breves.
 
-La implementación utiliza Python y NLTK, una base JSON ficticia y respuestas determinadas por reglas. Los ejemplos permiten comprobar el recorrido de una consulta; no representan hallazgos de una planta. Factory Guardian conserva como visión futura la relación entre observaciones visuales, antecedentes y explicaciones para el supervisor. Aquí desarrollo únicamente su componente de consultas.
+La entrega utiliza cuatro registros ficticios y una guía demostrativa. Esta aclaración aplica a todos los ejemplos y resultados del documento; no son observaciones de una planta ni procedimientos aprobados. La visión general del proyecto contempla otras capacidades, pero aquí desarrollo únicamente un chatbot de consultas por reglas.
+
+Documento y repositorio se entregan juntos: el documento explica el problema, la metodología y las decisiones; GitHub conserva el código, el notebook, la documentación técnica y la evidencia completa de ejecución.
 
 ## 1. Selecciona un problema real que pueda beneficiarse mediante el uso de inteligencia artificial y justifica su pertinencia.
 
-El problema que seleccioné es la dificultad de recuperar antecedentes sobre interacciones entre peatones y montacargas cuando los registros y las orientaciones están dispersos. El supervisor necesita localizar eventos de una zona, revisar su estado y encontrar la guía relacionada. OSHA reconoce riesgos de lesiones por esa interacción y aborda la organización del tránsito en el trabajo (Occupational Safety and Health Administration, s. f.).
+El problema que seleccioné es la dificultad de recuperar antecedentes y orientaciones cuando la información sobre interacciones entre peatones y montacargas está dispersa. Para un supervisor, localizar lo registrado en una zona y revisar el estado de un evento son tareas diferentes de detectar un peligro. Mi propuesta comienza por facilitar esa consulta, sin asumir que el asistente puede evaluar por sí mismo la seguridad del lugar.
 
-No dispongo de información de una planta ni de mediciones sobre sus tiempos de consulta. Por eso utilizo una situación demostrativa, sin atribuirle resultados industriales. El asistente permite explorar una interfaz de lenguaje natural para recuperar información; no determina si un cruce es seguro ni sustituye una evaluación profesional.
+La pertinencia del contexto se relaciona con los riesgos de interacción entre peatones y vehículos industriales, descritos por OSHA al abordar el tránsito en el trabajo (Occupational Safety and Health Administration, s. f.). No cuento con mediciones de tiempos de consulta de una empresa; por eso planteo el beneficio como una posibilidad que habría que validar, no como una reducción de incidentes ya conseguida.
+
+Decidí separar la idea completa del alcance de este avance. Antes de conectar cámaras o generar alertas, necesitaba definir qué preguntas tendría sentido responder y con qué información. Un chatbot por reglas permite concretar esa primera relación entre necesidad, consulta y respuesta, además de atender lo solicitado en la actividad.
 
 ## 2. Define los siguientes elementos de la solución:
 
 ### Problema
 
-Recuperar registros y orientaciones sin revisar manualmente toda la base. De esa necesidad se desprenden las consultas por zona, por identificador y por guía. Esta versión interpreta preguntas breves, las vincula con datos disponibles y solicita información cuando falta una zona o un identificador.
+Recuperar información de una base de conocimiento sin revisar manualmente todos sus registros. La consulta debe distinguir entre una zona, un evento identificado y una guía, porque cada uno requiere información diferente para responder.
 
 ### Objetivo general
 
-Desarrollar un chatbot basado en reglas que identifique consultas en español y devuelva información de una base demostrativa sobre eventos, estados y una guía asociada con una zona.
+Desarrollar un chatbot funcional en español, basado en reglas y tokenización con NLTK, que permita consultar eventos por zona, recuperar su estado por identificador y encontrar una guía asociada. El resultado esperado es una respuesta vinculada con los datos disponibles o una orientación cuando la pregunta no puede resolverse.
 
 ### Usuarios objetivo
 
-Los usuarios objetivo son supervisores y personal de seguridad industrial que necesitan consultar antecedentes. Las pruebas representan sus consultas mediante guiones conocidos; no se afirma que hayan participado usuarios de una planta en esta evaluación.
+Supervisores y personal de seguridad industrial que necesitan recuperar antecedentes. Para esta primera versión representé sus posibles consultas mediante casos de prueba; la evaluación no incluyó participantes de una planta.
 
 ### Alcance
 
-Delimité las funciones a consultas de solo lectura. Hay cuatro registros ficticios en Cruce C y una guía demostrativa G-01. Andén A y Pasillo B permiten comprobar consultas sin registros. No se conectan cámaras, no se envían alertas, no se modifican estados y no se registran eventos. Tampoco se utiliza un modelo de lenguaje ni un dashboard.
+El prototipo consulta información de solo lectura. Reconoce preguntas previstas, solicita reformular cuando falta una zona o un identificador y explica sus límites. Cada mensaje se procesa de manera independiente. Cámaras, alertas, registro de nuevos eventos y modelos de lenguaje quedan fuera de este avance.
 
 ### Beneficios esperados
 
-Espero facilitar consultas y hacer visible la relación entre pregunta, intención y respuesta. Estos beneficios requieren evaluarse con usuarios y datos reales; todavía no se han medido en una empresa.
+Facilitar el acceso a los registros y orientar preguntas incompletas. La utilidad consiste en recuperar información, no en declarar que un área es segura. Para medir el beneficio real sería necesario comparar la consulta con el proceso habitual de los usuarios.
 
 ## 3. Diseña la arquitectura conceptual inicial del asistente inteligente. Incluye, como mínimo:
 
 ### Usuario
 
-La persona escribe una consulta completa mediante la terminal, el notebook o una llamada desde Python. Puede solicitar ayuda si desconoce la forma de preguntar.
+Es quien tiene una necesidad de información y la expresa mediante una pregunta. El flujo parte de esa necesidad, no de una pantalla particular: la consulta puede escribirse en el notebook o en la terminal.
 
 ### Chatbot
 
-La clase `FactoryGuardianBot` recibe texto mediante `respond` y devuelve un objeto `Reply` con `intent` y `text`. Las funciones de normalización, tokenización y carga del conocimiento están separadas de la clase. Así, el mismo comportamiento puede utilizarse desde la terminal o el notebook sin mezclar la consulta con la interfaz.
+Interpreta la solicitud mediante reglas, identifica qué información necesita y prepara la respuesta. Separé esta responsabilidad de la interfaz para que el mismo comportamiento se utilice desde distintos puntos de entrada. La organización por responsabilidades también evita concentrar toda la lógica en un archivo principal, dificultad que ya había encontrado en un backend anterior.
 
 ### Base de conocimiento
 
-El archivo `knowledge.json` contiene zonas, eventos y una guía. Cada evento tiene ID, zona, estado y descripción. Los estados de ejemplo son Abierto, En revisión y Cerrado. El chatbot cuenta los registros consultados en el JSON; el número cuatro no está escrito como una respuesta fija.
+Conserva zonas, eventos y una guía. Cada evento tiene un identificador, zona, estado y descripción. Mantener los datos separados de las respuestas permite consultar su contenido: si cambia la cantidad de registros, debe cambiar el conteo sin reescribir una frase fija.
 
 ### Flujo conversacional
 
-El recorrido es mensaje del usuario, normalización, tokenización con NLTK, evaluación de reglas, consulta del JSON y respuesta. Una consulta útil tiene prioridad sobre un saludo que la acompañe. Si falta información, el bot solicita reformular la pregunta completa. Cada mensaje se interpreta por separado: después de preguntar «¿Cuántos eventos hay?», escribir únicamente «Cruce C» no completa una conversación anterior.
+La pregunta se normaliza y divide en unidades de texto. Después se identifica la intención y se revisa si incluye los datos necesarios. Una consulta válida recupera información de la base; una incompleta solicita una pregunta completa. Si el tema queda fuera del alcance, se comunica esa limitación.
+
+Por ejemplo, una consulta de eventos necesita una zona, mientras que la consulta de estado requiere un identificador. Esta diferencia explica por qué no basta con reconocer una palabra: también hay que verificar qué dato permite responder. El chatbot no conserva una conversación anterior para completar la siguiente pregunta.
+
+La arquitectura mantiene cuatro componentes relacionados: el usuario plantea la consulta, el chatbot la interpreta, la base aporta la información y el flujo determina cómo responder o pedir una reformulación. Las funciones y archivos que materializan esta organización se explican en la guía técnica del repositorio.
 
 ## 4. Diseña un conjunto de intenciones conversacionales y sus respuestas asociadas. Asegúrate de que las intenciones correspondan con el problema, los usuarios y el alcance previamente definidos.
 
-El conjunto permite consultar información, iniciar y cerrar la interacción, pedir ayuda y responder a solicitudes no reconocidas.
+Organicé las intenciones alrededor de lo que el usuario necesita hacer. Las tres consultas principales son eventos por zona, estado por identificador y guía por zona. Saludo, ayuda y despedida permiten orientar la interacción; las respuestas de alcance y de consulta no reconocida atienden solicitudes que no se pueden resolver.
 
-| Intención | Ejemplo de mensaje | Comportamiento asociado |
+| Intención | Ejemplo de consulta | Respuesta o comportamiento |
 |---|---|---|
-| `saludo` | Hola | Presenta Factory Guardian y ofrece ayuda. |
-| `ayuda` | Necesito ayuda | Muestra consultas y ejemplos admitidos. |
-| `alcance` | ¿Puedes enviar alertas? | Explica los límites de esta demostración. |
-| `consultar_eventos` | Eventos en Cruce C | Cuenta los registros de esa zona. |
-| `consultar_estado` | Estado NM-001 | Recupera el estado del identificador. |
-| `consultar_procedimiento` | Guía de Cruce C | Presenta G-01 como guía ficticia. |
-| `despedida` | Adiós | Cierra la interacción. |
-| `no_reconocida` | ¿Qué clima hará mañana? | Solicita reformular y recomienda ayuda. |
+| Saludo | Hola | Presenta al asistente y ofrece ayuda. |
+| Ayuda | Necesito ayuda | Explica las consultas disponibles con ejemplos. |
+| Alcance | ¿Puedes enviar alertas? | Aclara qué funciones incluye esta versión. |
+| Eventos por zona | Eventos en Cruce C | Devuelve el número de registros de la zona. |
+| Estado de un evento | Estado NM-001 | Recupera el estado del identificador indicado. |
+| Guía por zona | Guía de Cruce C | Presenta la guía disponible para esa zona. |
+| Despedida | Adiós | Cierra la interacción. |
+| Consulta no reconocida | ¿Qué clima hará mañana? | Sugiere pedir ayuda y reformular la pregunta. |
 
-Distingo una zona sin registros de un identificador inexistente: ninguna situación debe producir información inventada. La guía mantiene una advertencia explícita sobre su carácter demostrativo. Una petición para registrar un evento conduce a la explicación del alcance, porque las operaciones de escritura quedaron fuera de esta versión.
+Una pregunta útil tiene prioridad sobre el saludo que la acompaña. Si alguien escribe «Hola, eventos en Cruce C», lo importante es responder la consulta, no detenerse en la bienvenida. También distingo una consulta incompleta de una consulta válida sin resultados: pedir una zona no es lo mismo que informar que esa zona tiene cero registros.
+
+En una consulta de guía, la ausencia de información debe comunicarse. No tendría sentido completar una orientación de seguridad con una respuesta inventada. Estas decisiones delimitan el comportamiento esperado y sirven como criterios para las pruebas.
 
 ## 5. Implementa un chatbot basado en reglas utilizando Python 3.10 o superior y NLTK. Utiliza Google Colab para el desarrollo y conserva el código fuente en GitHub.
 
-La implementación utiliza Python 3.10 o superior. NLTK interviene en el procesamiento del texto mediante `wordpunct_tokenize`, herramienta de tokenización documentada por el proyecto (NLTK Project, s. f.). Este fragmento pertenece a `bot.py`:
+La implementación sigue una secuencia: recibir el texto, normalizarlo, tokenizarlo, aplicar reglas y recuperar la información necesaria. Python permite organizar esas tareas en funciones y una clase de chatbot; NLTK interviene mediante `wordpunct_tokenize`, que divide el texto en unidades utilizables por las reglas (NLTK Project, s. f.).
+
+La normalización reduce diferencias de escritura, como mayúsculas y tildes. Después, las reglas buscan expresiones previstas y los datos de la consulta. Esta elección corresponde a una primera versión con intenciones delimitadas; no requiere entrenar un modelo ni permite afirmar que el chatbot comprende cualquier forma de preguntar.
+
+El código mantiene separados el comportamiento del bot, la base JSON y las formas de ejecutarlo. Así, el notebook y la terminal llaman a la misma solución, en lugar de mantener dos versiones distintas. Las pruebas se encuentran aparte para contrastar el comportamiento con resultados esperados.
+
+### Código fuente
+
+El siguiente fragmento de la implementación muestra la relación entre la consulta y la base:
 
 ```python
-def tokenize(text: str) -> tuple[str, ...]:
-    return tuple(
-        token for token in wordpunct_tokenize(normalize(text))
-        if token.isalnum()
-    )
+count = sum(item["zone"] == zone for item in self.knowledge["events"])
+noun = "registro disponible" if count == 1 else "registros disponibles"
+return Reply("consultar_eventos", f"{zone} tiene {count} {noun}.")
 ```
 
-La normalización permite comparar mensajes sin depender de mayúsculas o tildes. La tokenización produce unidades que utilizan las reglas; no supone comprensión general ni aprendizaje a partir de conversaciones. Los identificadores se reconocen por un patrón y las respuestas recuperan datos de la base local.
+El número se obtiene de los registros asociados con la zona. La respuesta no contiene una cifra fija que aparente consultar información. Este fragmento pertenece a una rama que previamente revisa si se reconoció la zona; el archivo completo, las reglas y los comandos de ejecución están en GitHub.
 
-El notebook es compatible con Google Colab, servicio de notebooks que admite archivos `.ipynb` y permite cargarlos desde GitHub o desde un archivo (Google, s. f.). La evidencia de esta entrega corresponde a ejecución local. El código completo se conserva en el repositorio privado [Factory Guardian Avance 1](https://github.com/rubenstrada/Factory-Guardian-Avance-1), junto con el notebook, las pruebas y sus resultados.
+El notebook se entrega en formato `.ipynb`, compatible con Google Colab (Google, s. f.). La evidencia disponible corresponde a ejecución local. El repositorio [Factory Guardian Avance 1](https://github.com/rubenstrada/Factory-Guardian-Avance-1) conserva la implementación, el notebook y las instrucciones para repetir las comprobaciones.
 
 ## 6. Realiza pruebas funcionales mediante, al menos, diez conversaciones distintas. Verifica el comportamiento del chatbot ante las intenciones definidas y conserva evidencias de ejecución.
 
-El conjunto funcional contiene diez conversaciones separadas con dos mensajes de usuario en cada una. Las expectativas incluyen la intención y elementos concretos del texto. El registro de ejecución muestra 20 mensajes aprobados y ninguno fallido; la suite automatizada registra 26 pruebas aprobadas. Esto comprueba los casos definidos, sin estimar desempeño industrial.
+Las pruebas contrastan las intenciones y elementos de respuesta con expectativas definidas. Se revisaron consultas correctas, información faltante, registros inexistentes, diferencias de escritura y solicitudes fuera del alcance. Cada conversación incluye dos mensajes de usuario procesados de manera independiente. El resumen relaciona cada situación con el comportamiento observado.
 
-| Conversación | Mensajes incluidos | Comprobación principal |
+| Caso | Situación comprobada | Resultado observado |
 |---|---|---|
-| C01 | «Hola»; «Necesito ayuda» | Presentación y orientación. |
-| C02 | Consulta de Cruce C; consulta de Andén A | Cuatro registros frente a zona sin registros. |
-| C03 | Saludo con consulta en mayúsculas; consulta de Pasillo B | Prioridad y normalización. |
-| C04 | Estado de NM-001; estado de NM-003 | Estados Abierto y Cerrado. |
-| C05 | Estado de NM-999; estado de NM-002 | ID inexistente y consulta válida independiente. |
-| C06 | Eventos sin zona; pregunta completa sobre Cruce C | Solicitud de reformulación. |
-| C07 | Estado sin ID; consulta de NM-004 | Identificador obligatorio. |
-| C08 | Guía de Cruce C; guía de Andén A | Guía disponible y ausencia de guía. |
-| C09 | Conectar cámaras y alertas; registrar un evento | Límites y ausencia de escritura. |
-| C10 | Consulta del clima; despedida | Mensaje no reconocido y cierre. |
+| C01 | Saludo y solicitud de ayuda | Presentación y ejemplos de consulta. |
+| C02 | Cruce C y Andén A | Cuatro registros y cero registros, respectivamente. |
+| C03 | Saludo con consulta en mayúsculas y Pasillo B | Prioriza la consulta; devuelve cuatro y cero registros. |
+| C04 | Estados de NM-001 y NM-003 | Abierto y Cerrado, respectivamente. |
+| C05 | NM-999 inexistente y NM-002 | Informa la ausencia; recupera En revisión. |
+| C06 | Eventos sin zona y pregunta completa | Pide reformular; después devuelve cuatro registros. |
+| C07 | Estado sin ID y consulta de NM-004 | Solicita identificador; después recupera Abierto. |
+| C08 | Guías de Cruce C y Andén A | Presenta G-01; comunica que no hay guía para Andén A. |
+| C09 | Cámaras, alertas y registro de eventos | Explica el alcance sin ejecutar esas operaciones. |
+| C10 | Consulta del clima y despedida | Orienta la reformulación y cierra la interacción. |
 
-Los archivos `artifacts/conversations.md` y `artifacts/conversations.json` conservan las transcripciones, las expectativas, la salida obtenida y el entorno. `artifacts/test_results.xml` permite revisar las comprobaciones automatizadas. Estos archivos complementan el notebook y permiten contrastar lo que el reporte describe con el comportamiento ejecutado.
+El registro de ejecución conserva veinte mensajes aprobados y ninguno fallido. La suite automatizada también registra 26 pruebas aprobadas, entre ellas la ejecución del notebook desde un directorio vacío. Las transcripciones completas, expectativas y salidas están en GitHub; aquí presento su propósito y un ejemplo del comportamiento observado.
 
 ## 7. Analiza los resultados obtenidos e identifica las principales limitaciones de esta primera versión, así como posibles mejoras para las siguientes etapas del proyecto.
 
-La interpretación debe centrarse en si cada consulta recupera el dato esperado y mantiene los límites definidos. Obtener cuatro registros en Cruce C únicamente describe el contenido ficticio del JSON; no mide la frecuencia de incidentes. Del mismo modo, devolver «Cerrado» para NM-003 no certifica que una condición real esté resuelta.
+Los resultados muestran que el prototipo responde conforme a los casos definidos. La consulta de Cruce C devuelve cuatro registros y la de Andén A devuelve cero porque recuperan contenidos distintos de la misma base. Esa diferencia comprueba la consulta; no permite comparar el riesgo de ambas zonas, porque el conjunto no mide exposición, frecuencia ni condiciones reales de operación.
 
-La principal limitación es la dependencia de reglas y vocabulario previsto. Una expresión distinta puede no reconocerse; una pregunta ambigua puede coincidir con una regla sin reflejar la intención de la persona. Además, el bot no conserva contexto y la base no se actualiza durante las consultas. Las conversaciones de prueba cubren casos definidos, no todo el lenguaje posible.
+Las conversaciones incompletas muestran otro aspecto importante. El asistente solicita la información necesaria antes de responder, pero el siguiente mensaje debe contener la pregunta completa. Esto simplifica el flujo y evita depender de un contexto implícito, aunque resulta menos cómodo que una conversación con memoria. La limitación debe considerarse al evaluar la experiencia de uso.
 
-Para una siguiente etapa considero ampliar ejemplos con usuarios y revisar solicitudes no reconocidas. Incorporar información real requeriría una fuente autorizada, responsables de actualización y validación de las guías. Otras capacidades exigirían decisiones nuevas; no las presento como funciones ya construidas.
+El resultado de veinte mensajes aprobados no equivale a una exactitud general del 100 %. Se verificaron ejemplos conocidos, no una muestra representativa del lenguaje de los usuarios. Una expresión no prevista puede quedar sin reconocer; preguntas con varias intenciones o negaciones complejas pueden coincidir con reglas sin representar correctamente lo solicitado.
+
+También es necesario separar un estado registrado de una conclusión operativa. Que NM-003 aparezca como Cerrado indica lo que contiene la base; el chatbot no verificó que una condición de seguridad se haya resuelto. La información y las guías necesitarían responsables de actualización y validación antes de utilizarse en una planta.
+
+La siguiente mejora que priorizaría es probar consultas de usuarios y revisar cuáles no se reconocen. Con esa evidencia tendría sentido ampliar las reglas o incorporar técnicas posteriores de procesamiento del lenguaje. La memoria conversacional podría añadirse si las pruebas muestran dificultades frecuentes para reformular. Las cámaras y alertas corresponden a etapas distintas, con datos y validaciones propias.
 
 ## Conclusiones
 
-Este avance convierte una parte de mi propuesta Factory Guardian en un prototipo acotado que relaciona consultas, reglas y datos. Decidí empezar por recuperar información antes de ampliar la idea del hackathon a cámaras y alertas. La solución permite seguir de dónde sale cada respuesta y distinguir una consulta incompleta de otra válida sin resultados. El aprendizaje central es que definir un asistente también exige decidir qué información necesita y qué conclusiones no puede sostener.
+Mi conclusión es que la primera tarea de Factory Guardian no era incorporar todas las capacidades de la idea original, sino precisar una necesidad que pudiera atender y comprobar. El chatbot permite relacionar una pregunta con datos disponibles y reconocer cuándo falta información. Ese recorrido aporta una base concreta para las siguientes etapas.
+
+Mantengo la distinción entre recuperar información y decidir sobre una situación de seguridad. Las pruebas permiten revisar el funcionamiento de las reglas; la utilidad para el usuario todavía requiere evaluarse en su contexto. Antes de ampliar el proyecto, revisaría si las consultas propuestas corresponden con lo que el supervisor realmente necesita y cómo mantiene actualizados sus antecedentes.
 
 ## Uso de herramientas
 
-La idea de Factory Guardian y el alcance que buscaba desarrollar partieron de mí. Primero planteé el problema y después lo acoté a consultas sobre eventos, estados y una guía. Estas funciones responden a necesidades concretas del supervisor sin convertir al chatbot en una herramienta que decide si una situación es segura.
+La idea de Factory Guardian y el alcance que buscaba desarrollar partieron de mí. Primero planteé la necesidad del usuario y después acoté esta entrega a consultas sobre eventos, estados y una guía. Mi experiencia con un backend anterior, donde había concentrado demasiada lógica en `app.py`, influyó en la preferencia por una organización separada por responsabilidades.
 
-De mis trabajos anteriores mantuve la preferencia por separar responsabilidades. Mi experiencia con un backend de ERP, donde había concentrado demasiada lógica en `app.py`, influyó en la organización que buscaba para este avance. Separar el chatbot, el JSON, las formas de ejecución y las pruebas permite localizar qué interpreta la pregunta y de dónde obtiene la respuesta.
+Utilicé Codex para discutir alternativas, concretar las especificaciones en código y apoyar la revisión, la preparación del notebook y la documentación. También asistió en la ejecución de las pruebas, cuyos resultados y entorno quedan registrados en el repositorio. El trabajo se fue ajustando al alcance y a la forma de presentación que fui indicando.
 
-Utilicé Codex para discutir alternativas, concretar mis especificaciones en código, revisar la implementación, preparar el notebook, ejecutar las pruebas y apoyar la redacción. Fui indicando el alcance y los ajustes de organización y presentación. La implementación y las comprobaciones automatizadas se realizaron con esa asistencia; la evidencia identifica su ejecución local.
-
-Mi responsabilidad es comprender y explicar las decisiones de la solución: por qué una consulta tiene prioridad sobre un saludo, por qué se pide una zona o un ID completos y por qué el conteo se obtiene de los registros. Las pruebas verifican esos casos, sin demostrar comprensión general del lenguaje ni validación en una planta. La explicación ampliada de este proceso está en la nota de uso de IA del repositorio.
+Mi responsabilidad sobre la entrega incluye comprender por qué cada consulta necesita determinados datos, de dónde sale la respuesta y qué límites tienen sus resultados. La nota metodológica ampliada de GitHub explica este proceso; el código y las evidencias permiten contrastar la explicación del documento con la implementación.
 
 ## Referencias
 
